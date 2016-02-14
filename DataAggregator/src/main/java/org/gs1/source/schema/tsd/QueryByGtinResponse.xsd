@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:product_data="urn:gs1:tsd:product_data:xsd:1" xmlns:query_by_gtin_response="urn:gs1:tsd:query_by_gtin_response:xsd:1" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:gs1:tsd:query_by_gtin_response:xsd:1" version="1.1">
+    <xsd:annotation>
+        <xsd:documentation><![CDATA[---------------------------
+© Copyright GS1, 2013
+
+GS1 is providing this XML Schema Definition file and resultant XML file as a service to interested industries.
+This XML Schema Definition file and resultant XML file were developed through a consensus process of interested parties.
+
+Although efforts have been made to ensure that the XML Schema Definition file and resultant XML file are correct, reliable, and technically
+accurate,  GS1 makes NO WARRANTY, EXPRESS OR IMPLIED, THAT THIS XML Schema Definition file and resultant XML file ARE
+CORRECT, WILL NOT REQUIRE MODIFICATION AS EXPERIENCE AND TECHNOLOGICAL ADVANCES DICTATE, OR WILL BE SUITABLE FOR
+ANY PURPOSE OR WORKABLE IN ANY APPLICATION, OR OTHERWISE.  Use of the XML Schema Definition file and resultant XML
+file are with the understanding that GS1 has no liability for any claim to the contrary, or for any damage or loss of any kind or nature.
+
+Version Information:
+Version Number: 1.1
+Date of creation: April 2013
+
+The schema and subsequent updates will be provided on the GS1 websites.
+---------------------------
+]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:import namespace="urn:gs1:shared:shared_common:xsd:3" schemaLocation="../shared/SharedCommon.xsd"/>
+    <xsd:import namespace="urn:gs1:tsd:product_data:xsd:1" schemaLocation="ProductData.xsd"/>
+    <xsd:import namespace="urn:gs1:tsd:tsd_common:xsd:1" schemaLocation="TSDCommon.xsd"/>
+    <xsd:element name="queryByGtinResponse" type="query_by_gtin_response:TSD_QueryByGTINResponseType"/>
+    <xsd:complexType name="TSD_ImplementationExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_InvalidGTINExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_InvalidRequestExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_InvalidTargetMarketExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_NoDataExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_QueryByGTINResponseType">
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="productData" type="product_data:TSD_ProductDataType"/>
+                <xsd:element name="noDataException" type="query_by_gtin_response:TSD_NoDataExceptionType"/>
+                <xsd:element name="invalidGTINException" type="query_by_gtin_response:TSD_InvalidGTINExceptionType"/>
+                <xsd:element name="invalidTargetMarketException" type="query_by_gtin_response:TSD_InvalidTargetMarketExceptionType"/>
+                <xsd:element name="unsupportedVersionException" type="query_by_gtin_response:TSD_UnsupportedVersionExceptionType"/>
+                <xsd:element name="invalidRequestException" type="query_by_gtin_response:TSD_InvalidRequestExceptionType"/>
+                <xsd:element name="securityException" type="query_by_gtin_response:TSD_SecurityExceptionType"/>
+                <xsd:element name="implementationException" type="query_by_gtin_response:TSD_ImplementationExceptionType"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_SecurityExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="exceptionContactDescription" type="shared_common:Description200Type"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TSD_UnsupportedVersionExceptionType">
+        <xsd:complexContent>
+            <xsd:extension base="tsd_common:TSD_ExceptionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<basic_product_information_module:basicProductInformationModule xmlns:basic_product_information_module="urn:gs1:tsd:basic_product_information_module:xsd:1" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:gs1:tsd:basic_product_information_module:xsd:1 BasicProductInformationModule.xsd ">
+  <productName languageCode="ko">아름꾸러미</productName>
+  <consumerMarketingDescription languageCode="ko">행복은 "건강한 밥상"에서부터 시작됩니다.</consumerMarketingDescription>
+  <gpcCategoryCode>88054301</gpcCategoryCode>
+  <regulatedProductName languageCode="ko">건강밥상 아름꾸러미</regulatedProductName>
+  <brandNameInformation>
+    <brandName>wanju local food</brandName>
+    <languageSpecificBrandName languageCode="ko">완주 로컬 푸드</languageSpecificBrandName>
+  </brandNameInformation>
+  <productInformationLink>
+    <url>http://www.hilocalfood.com/mall/list.do?menuCd=DOM_000000502002000000</url>
+    <productInformationTypeCode>CONSUMER_HANDLING_AND_STORAGE</productInformationTypeCode>
+    <languageCode>ko</languageCode>
+  </productInformationLink>
+  <imageLink>
+    <url>http://www.hilocalfood.com/upload_data/mall_data/GDS0000000106/thumbnail/138387195382979.jpg</url>
+    <imageTypeCode>PRODUCT_IMAGE</imageTypeCode>
+  </imageLink>
+  <packagingSignatureLine>
+    <partyContactRoleCode>DISTRIBUTOR</partyContactRoleCode>
+  </packagingSignatureLine>
+</basic_product_information_module:basicProductInformationModule>
