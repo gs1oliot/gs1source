@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query_by_gtin_response:queryByGtinResponse
+	xmlns:product_data="urn:gs1:tsd:product_data:xsd:1"
+	xmlns:query_by_gtin_response="urn:gs1:tsd:query_by_gtin_response:xsd:1"
+	xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3"
+	xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:basic_product_information_module="urn:gs1:tsd:basic_product_information_module:xsd:1"
+	xmlns:product_instructions_module="urn:gs1:tsd:product_instructions_module:xsd:1"
+	xmlns:product_origin_information_module="urn:gs1:tsd:product_origin_information_module:xsd:1"
+	xsi:schemaLocation="urn:gs1:tsd:query_by_gtin_response:xsd:1 QueryByGtinResponse.xsd">
+	<productData>
+        <gtin>08801111051514</gtin>
+        <targetMarket codeListVersion="1.1">410</targetMarket>
+        <informationProviderGLN>8801110123458</informationProviderGLN>
+        <informationProviderName>완주로컬푸드</informationProviderName>
+        <productDataRecord>
+            <modules>
+                <module
+					xsi:type="basic_product_information_module:TSD_BasicProductInformationModuleType"
+					xsi:schemaLocation="urn:gs1:tsd:basic_product_information_module:xsd:1 BasicProductInformationModule.xsd ">
+                    <productName languageCode="ko">아름꾸러미</productName>
+                    <consumerMarketingDescription languageCode="ko">행복은 "건강한 밥상"에서부터 시작됩니다.</consumerMarketingDescription>
+                    <gpcCategoryCode>88054301</gpcCategoryCode>
+                    <regulatedProductName languageCode="ko">건강밥상 아름꾸러미</regulatedProductName>
+                    <brandNameInformation>
+                        <brandName>wanju_local_food</brandName>
+                        <languageSpecificBrandName languageCode="ko">완주로컬푸드</languageSpecificBrandName>
+                    </brandNameInformation>
+                    <productInformationLink>
+                        <url>http://www.hilocalfood.com/mall/list.do?menuCd=DOM_000000502002000000</url>
+                        <productInformationTypeCode>CONSUMER_HANDLING_AND_STORAGE</productInformationTypeCode>
+                        <languageCode>ko</languageCode>
+                    </productInformationLink>
+                    <imageLink>
+                        <url>http://www.hilocalfood.com/upload_data/mall_data/GDS0000000106/thumbnail/138387195382979.jpg</url>
+                        <imageTypeCode>PRODUCT_IMAGE</imageTypeCode>
+                    </imageLink>
+                    <packagingSignatureLine>
+                        <partyContactRoleCode>DISTRIBUTOR</partyContactRoleCode>
+                    </packagingSignatureLine>
+                </module>
+                <module
+					xsi:type="product_instructions_module:TSD_ProductInstructionsModuleType"
+					xsi:schemaLocation="urn:gs1:tsd:product_instructions_module:xsd:1 ProductInstructionsModule.xsd ">
+                    <consumerUsageInstructions languageCode="ko" codeListVersion="1.1">흐르는 물에 씻어서 드세요.</consumerUsageInstructions>
+                    <consumerStorageInstructions languageCode="ko" codeListVersion="1.1">냉장 보관 하세요.</consumerStorageInstructions>
+                    <avpList>
+                        <stringAVP name="notice">기온이 높은 곳에 보관하지 마세요.</stringAVP>
+                    </avpList>
+                </module>
+                <module
+					xsi:type="product_origin_information_module:TSD_ProductOriginInformationModuleType"
+					xsi:schemaLocation="urn:gs1:tsd:product_origin_information_module:xsd:1 ProductOriginInformationModule.xsd">
+                    <productOriginStatement languageCode="ko" codeListVersion="1.1">완주군</productOriginStatement>
+                    <countryOfOrigin>
+                        <countryCode codeListVersion="1.1">410</countryCode>
+                    </countryOfOrigin>
+                    <productActivityDetails>
+                        <productActivityTypeCode codeListVersion="1.1">PLACE_OF_BIRTH</productActivityTypeCode>
+                    </productActivityDetails>
+                </module>
+            </modules>
+        </productDataRecord>
+    </productData>
+</query_by_gtin_response:queryByGtinResponse>
+
+

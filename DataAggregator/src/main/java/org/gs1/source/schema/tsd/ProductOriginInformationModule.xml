@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product_origin_information_module:productOriginInformationModule xmlns:product_origin_information_module="urn:gs1:tsd:product_origin_information_module:xsd:1" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:gs1:tsd:product_origin_information_module:xsd:1 ProductOriginInformationModule.xsd ">
+  <productOriginStatement codeListVersion="1.1" languageCode="en">wanjugun woonjumyun kodangli</productOriginStatement>
+  <productProvenanceStatement codeListVersion="1.1" languageCode="en">wanju farm</productProvenanceStatement>
+  <countryOfOrigin>
+    <countryCode codeListVersion="1.1">410</countryCode>
+  </countryOfOrigin>
+  <productActivityDetails>
+    <productActivityTypeCode codeListVersion="1.1">PLACE_OF_BIRTH</productActivityTypeCode>
+    <activityRegionDescription codeListVersion="1.1" languageCode="en">producing</activityRegionDescription>
+    <countryOfActivity>
+      <countryCode codeListVersion="1.1">410</countryCode>
+    </countryOfActivity>
+  </productActivityDetails>
+</product_origin_information_module:productOriginInformationModule>
