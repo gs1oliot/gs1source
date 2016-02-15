@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" targetNamespace="urn:gs1:tsd:tsd_common:xsd:1" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.1">
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[---------------------------
+© Copyright GS1, 2013
+
+GS1 is providing this XML Schema Definition file and resultant XML file as a service to interested industries.
+This XML Schema Definition file and resultant XML file were developed through a consensus process of interested parties.
+
+Although efforts have been made to ensure that the XML Schema Definition file and resultant XML file are correct, reliable, and technically
+accurate,  GS1 makes NO WARRANTY, EXPRESS OR IMPLIED, THAT THIS XML Schema Definition file and resultant XML file ARE
+CORRECT, WILL NOT REQUIRE MODIFICATION AS EXPERIENCE AND TECHNOLOGICAL ADVANCES DICTATE, OR WILL BE SUITABLE FOR
+ANY PURPOSE OR WORKABLE IN ANY APPLICATION, OR OTHERWISE.  Use of the XML Schema Definition file and resultant XML
+file are with the understanding that GS1 has no liability for any claim to the contrary, or for any damage or loss of any kind or nature.
+
+Version Information:
+Version Number: 1.1
+Date of creation: June 2013
+
+The schema and subsequent updates will be provided on the GS1 websites.
+---------------------------
+]]></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import namespace="urn:gs1:shared:shared_common:xsd:3" schemaLocation="../shared/SharedCommon.xsd"/>
+	<xsd:complexType name="TSD_AttributeValuePairListType">
+		<xsd:sequence>
+			<xsd:element name="stringAVP" type="tsd_common:TSD_StringAttributeValuePairType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ExceptionType">
+		<xsd:sequence>
+			<xsd:element name="exceptionReason" type="shared_common:Description200Type"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_FormattedDescription1000Type">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:String1000Type">
+				<xsd:attribute name="languageCode" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="80"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="formattingPattern">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="500"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_FormattedDescription2500Type">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:String2500Type">
+				<xsd:attribute name="languageCode" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="80"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="formattingPattern">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="500"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_FormattedDescription5000Type">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:String5000Type">
+				<xsd:attribute name="languageCode" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="80"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="formattingPattern">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="500"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ImageLinkType">
+		<xsd:sequence>
+			<xsd:element name="url">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:anyURI">
+						<xsd:maxLength value="2500"/>
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="imageTypeCode" type="tsd_common:TSD_ImageTypeCodeType"/>
+			<xsd:element name="languageCode" type="shared_common:LanguageCodeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="imagePixelHeight" type="xsd:nonNegativeInteger" minOccurs="0"/>
+			<xsd:element name="imagePixelWidth" type="xsd:nonNegativeInteger" minOccurs="0"/>
+			<xsd:element name="fileSize" type="shared_common:MeasurementType" minOccurs="0"/>
+			<xsd:element name="avpList" type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ImageTypeCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_MeasurementPrecisionCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ProductInformationLinkType">
+		<xsd:sequence>
+			<xsd:element name="url">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:anyURI">
+						<xsd:maxLength value="2500"/>
+						<xsd:minLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="productInformationTypeCode" type="tsd_common:TSD_ProductInformationTypeCodeType"/>
+			<xsd:element name="languageCode" type="shared_common:LanguageCodeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="avpList" type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ProductInformationTypeCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_StringAttributeValuePairType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="name" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="70"/>
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+    <xsd:complexType name="TSD_ModuleType"/>
+    
+    <xsd:complexType name="TSD_ModulesType">
+    	<xsd:complexContent>
+    		<xsd:extension base="tsd_common:TSD_ModuleType">
+    			<xsd:sequence>
+    				<xsd:element name="module" minOccurs="1" maxOccurs="unbounded"/>
+    			</xsd:sequence>
+    		</xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

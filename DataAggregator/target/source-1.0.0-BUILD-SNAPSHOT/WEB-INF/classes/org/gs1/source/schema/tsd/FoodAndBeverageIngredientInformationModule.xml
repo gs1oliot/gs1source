@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<food_and_beverage_ingredient_information_module:foodAndBeverageIngredientInformationModule xmlns:food_and_beverage_ingredient_information_module="urn:gs1:tsd:food_and_beverage_information_module:xsd:1" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:gs1:tsd:food_and_beverage_information_module:xsd:1 FoodAndBeverageIngredientInformationModule.xsd ">
+  <ingredientStatement languageCode="en">ingredientStatement</ingredientStatement>
+  <additivesStatement languageCode="en">additivesStatement</additivesStatement>
+  <foodAndBeverageIngredient>
+    <ingredientName languageCode="en">ingredientName</ingredientName>
+    <ingredientSequence>0</ingredientSequence>
+    <ingredientContentPercentage>0.0</ingredientContentPercentage>
+    <ingredientCountryOfOriginCode>ingredientCountryOfOriginCode</ingredientCountryOfOriginCode>
+    <ingredientCatchZone>ingredientCatchZone</ingredientCatchZone>
+    <isIngredientHighlighted>true</isIngredientHighlighted>
+  </foodAndBeverageIngredient>
+</food_and_beverage_ingredient_information_module:foodAndBeverageIngredientInformationModule>
