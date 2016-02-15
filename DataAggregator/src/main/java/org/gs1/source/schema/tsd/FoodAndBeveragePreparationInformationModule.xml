@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<food_and_beverage_preparation_information_module:foodAndBeveragePreparationInformationModule xmlns:food_and_beverage_preparation_information_module="urn:gs1:tsd:food_and_beverage_preparation_information_module:xsd:1" xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3" xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:gs1:tsd:food_and_beverage_preparation_information_module:xsd:1 FoodAndBeveragePreparationInformationModule.xsd ">
-  <servingSuggestion languageCode="en">servingSuggestion</servingSuggestion>
-  <preparationMethod>
-    <preparationTypeCode>preparationTypeCode</preparationTypeCode>
-    <preparationInstructions languageCode="en">preparationInstructions</preparationInstructions>
-  </preparationMethod>
-</food_and_beverage_preparation_information_module:foodAndBeveragePreparationInformationModule>
