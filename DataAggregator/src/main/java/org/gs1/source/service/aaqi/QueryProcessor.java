@@ -10,7 +10,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.gs1.source.service.DAOFactory;
 import org.gs1.source.service.DataAccessObject;
-import org.gs1.source.service.Test;
 import org.gs1.source.service.aiqi.AIQIProcessor;
 import org.gs1.source.service.mongo.MongoClientKey;
 import org.gs1.source.service.type.TSDQueryByGTINRequestType;
@@ -124,9 +123,8 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 					} else {
 						aggregatorUrl = aiqiResponse.getIndexEntry().getDataAggregatorService().getBaseUrl();
 						Properties prop = new Properties();
-						prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+						prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 						String thisUrl = prop.getProperty("aggregatorUrl");
-						System.out.println(aggregatorUrl+"\n"+thisUrl);
 						if(aggregatorUrl.compareTo(thisUrl) == 0) {
 							logger.info("This data is not supported with this target market.");
 
@@ -192,7 +190,7 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		}
 
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String currentDataVersion = prop.getProperty("dataVersion");
 
 		if(Float.parseFloat(dataVersion) > Float.parseFloat(currentDataVersion)) {

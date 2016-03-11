@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.gs1.source.service.Test;
-import org.gs1.source.service.util.ZONEConvert;
+import org.gs1.source.service.util.ZONEConvertor;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.SimpleResolver;
@@ -25,10 +24,10 @@ public class ONSQuery {
 	public List<String> query(String gtin) throws IOException{
 		
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String ons_ip = prop.getProperty("ons_query_ip");
 		
-		String domain = (new ZONEConvert()).convert(gtin);
+		String domain = (new ZONEConvertor()).convert(gtin);
 		List<String> res = new ArrayList<String>();
 		Record[] result = null;
 		

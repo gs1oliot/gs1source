@@ -2,7 +2,6 @@ package org.gs1.source.service.mongo;
 
 import java.util.Properties;
 
-import org.gs1.source.service.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,7 +16,7 @@ public class MongoConfiguration {
 	public @Bean MongoTemplate mongoTemplate() throws Exception{
 		
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String DBname = prop.getProperty("DBname");
 		String DBaddr = prop.getProperty("DBaddr");
 		String DBport = prop.getProperty("DBport");

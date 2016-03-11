@@ -9,7 +9,7 @@ public class DataCache {
 
 	private static DataCache instance;
 
-	public static final int CACHE_SIZE = 30;
+	public static final int CACHE_SIZE = 5;
 
 	private HashMap<String, TSDQueryByGTINResponseType> keyMap;
 	private ArrayList<TSDQueryByGTINResponseType> cacheList;

@@ -8,9 +8,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.gs1.source.service.Test;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
-import org.gs1.source.service.util.ZONEConvert;
+import org.gs1.source.service.util.ZONEConvertor;
 
 public class RecordUpdator {
 	
@@ -19,7 +18,7 @@ public class RecordUpdator {
 	public void add(TSDIndexMaintenanceRequestType request, String token) throws ClientProtocolException, IOException {
 
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String ons_ip = prop.getProperty("ons_update_ip");
 		
 		String url = ons_ip + "atomiadns.json/AddDnsRecords";
@@ -30,7 +29,7 @@ public class RecordUpdator {
 
 		
 		String admin_username = prop.getProperty("admin_username");
-		String zone_name = (new ZONEConvert()).convert(request.getGtin());
+		String zone_name = (new ZONEConvertor()).convert(request.getGtin());
 		//NAPTR record
 		String rdata_1 = "0 0 \\\"U\\\" \\\"http://www.ons.gs1.org/tsd/servicetype-aaqi\\\" \\\"!^.*$!"
 				+ request.getAggregatorUrl() + "!\\\" .";

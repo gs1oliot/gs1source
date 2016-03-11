@@ -9,8 +9,6 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.gs1.source.service.Test;
-
 public class TLSConnection {
 
 	private static final String PROPERTY_PATH = "aggregator.properties";
@@ -23,7 +21,7 @@ public class TLSConnection {
 	public SSLContext clientConnection() throws Exception {
 		
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String keystore = prop.getProperty("keystore");
 		String password = prop.getProperty("password");
 

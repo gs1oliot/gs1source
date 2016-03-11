@@ -1,6 +1,6 @@
 package org.gs1.source.service.util;
 
-public class ZONEConvert {
+public class ZONEConvertor {
 
 	/**
 	 * Convert gtin to domain(aus)

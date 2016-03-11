@@ -9,10 +9,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.gs1.source.service.Test;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
 import org.gs1.source.service.type.TSDIndexMaintenanceResponseType;
-import org.gs1.source.service.util.ZONEConvert;
+import org.gs1.source.service.util.ZONEConvertor;
 
 public class ZONEUpdator implements AggregatorIndexMaintenanceInterface {
 
@@ -25,7 +24,7 @@ public class ZONEUpdator implements AggregatorIndexMaintenanceInterface {
 	public ZONEUpdator() throws IOException {
 
 		Properties prop = new Properties();
-		prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		ons_ip = prop.getProperty("ons_update_ip");
 		admin_username = prop.getProperty("admin_username");
 		admin_password = prop.getProperty("admin_password");
@@ -46,7 +45,7 @@ public class ZONEUpdator implements AggregatorIndexMaintenanceInterface {
 
 		HttpPost postRequest = new HttpPost(url);
 
-		String zone_name = (new ZONEConvert()).convert(request.getGtin());
+		String zone_name = (new ZONEConvertor()).convert(request.getGtin());
 		String parameters = "\"" + zone_name + "\", " + "0" + ", \"" + "ns." + zone_name + ".\", \"" + "root." + zone_name + ".\", "
 				+ "10800, 3600, 604800, 86400" + ", " + "[\"" + "ns." + zone_name + ".\"]" + ", \"" + admin_username + "\"";
 
@@ -90,7 +89,7 @@ public class ZONEUpdator implements AggregatorIndexMaintenanceInterface {
 
 		HttpPost postRequest = new HttpPost(url);
 
-		String parameters = "\"" + (new ZONEConvert()).convert(request.getGtin()) + "\"";
+		String parameters = "\"" + (new ZONEConvertor()).convert(request.getGtin()) + "\"";
 
 		postRequest.setHeader("X-Auth-Username", admin_username);
 		postRequest.setHeader("X-Auth-Token", token);

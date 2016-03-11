@@ -7,7 +7,6 @@ import javax.xml.bind.JAXBException;
 
 import org.gs1.source.service.DAOFactory;
 import org.gs1.source.service.DataAccessObject;
-import org.gs1.source.service.Test;
 import org.gs1.source.service.aimi.ZONEUpdator;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
 import org.gs1.source.service.util.POJOConvertor;
@@ -60,7 +59,7 @@ public class Registerar {
 		if(rs_check == null) {
 
 			Properties prop = new Properties();
-			prop.load(Test.class.getClassLoader().getResourceAsStream(PROPERTY_PATH));
+			prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 			String aggregatorUrl = prop.getProperty("aggregatorUrl");
 
 			TSDIndexMaintenanceRequestType request = new TSDIndexMaintenanceRequestType();
