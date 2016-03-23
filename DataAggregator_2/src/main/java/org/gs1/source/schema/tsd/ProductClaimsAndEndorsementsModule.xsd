@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:product_claims_and_endorsements_module="urn:gs1:tsd:product_claims_and_endorsements_module:xsd:1"
+	xmlns:shared_common="urn:gs1:shared:shared_common:xsd:3"
+	xmlns:tsd_common="urn:gs1:tsd:tsd_common:xsd:1"
+	targetNamespace="urn:gs1:tsd:product_claims_and_endorsements_module:xsd:1"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	version="1.1">
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[---------------------------
+© Copyright GS1, 2013
+
+GS1 is providing this XML Schema Definition file and resultant XML file as a service to interested industries.
+This XML Schema Definition file and resultant XML file were developed through a consensus process of interested parties.
+
+Although efforts have been made to ensure that the XML Schema Definition file and resultant XML file are correct, reliable, and technically
+accurate,  GS1 makes NO WARRANTY, EXPRESS OR IMPLIED, THAT THIS XML Schema Definition file and resultant XML file ARE
+CORRECT, WILL NOT REQUIRE MODIFICATION AS EXPERIENCE AND TECHNOLOGICAL ADVANCES DICTATE, OR WILL BE SUITABLE FOR
+ANY PURPOSE OR WORKABLE IN ANY APPLICATION, OR OTHERWISE.  Use of the XML Schema Definition file and resultant XML
+file are with the understanding that GS1 has no liability for any claim to the contrary, or for any damage or loss of any kind or nature.
+
+Version Information:
+Version Number: 1.1
+Date of creation: April 2013
+
+The schema and subsequent updates will be provided on the GS1 websites.
+---------------------------
+]]></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import namespace="urn:gs1:shared:shared_common:xsd:3"
+		schemaLocation="../shared/SharedCommon.xsd" />
+	<xsd:import namespace="urn:gs1:tsd:tsd_common:xsd:1"
+		schemaLocation="TSDCommon.xsd" />
+	<xsd:element name="productClaimsAndEndorsementsModule"
+		type="product_claims_and_endorsements_module:TSD_ProductClaimsAndEndorsementsModuleType" />
+	<xsd:complexType name="TSD_AccreditationCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType" />
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_AccreditationInformationType">
+		<xsd:sequence>
+			<xsd:element name="accreditationCode"
+				type="product_claims_and_endorsements_module:TSD_AccreditationCodeType"
+				minOccurs="0" />
+			<xsd:element name="accreditationText" type="shared_common:Description200Type"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="avpList"
+				type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_DietaryClaimCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType" />
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_NutritionalClaimCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType" />
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_ProductClaimsAndEndorsementsModuleType">
+		<xsd:complexContent>
+			<xsd:extension base="tsd_common:TSD_ModuleType">
+				<xsd:sequence>
+					<xsd:element name="regulatoryComplianceCode"
+						type="product_claims_and_endorsements_module:TSD_RegulatoryComplianceCodeType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="warningStatement" type="shared_common:Description1000Type"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="nutritionalClaimCode"
+						type="product_claims_and_endorsements_module:TSD_NutritionalClaimCodeType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="nutritionalClaimStatement" type="shared_common:Description5000Type"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="healthClaimDescription" type="shared_common:Description1000Type"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="dietaryClaimCode"
+						type="product_claims_and_endorsements_module:TSD_DietaryClaimCodeType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="accreditationInformation"
+						type="product_claims_and_endorsements_module:TSD_AccreditationInformationType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="avpList"
+						type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TSD_RegulatoryComplianceCodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="shared_common:GS1CodeType" />
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>
