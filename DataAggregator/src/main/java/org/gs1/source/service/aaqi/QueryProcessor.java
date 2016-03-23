@@ -19,8 +19,8 @@ import org.gs1.source.service.util.CheckBit;
 import org.gs1.source.service.util.MacEncode;
 import org.gs1.source.service.util.MacUrlGenerator;
 import org.gs1.source.service.util.POJOConvertor;
+import org.gs1.source.service.util.TSDExceptionGenerator;
 import org.gs1.source.tsd.CountryCodeType;
-import org.gs1.source.tsd.Description200Type;
 import org.gs1.source.tsd.TSDInvalidGTINExceptionType;
 import org.gs1.source.tsd.TSDInvalidRequestExceptionType;
 import org.gs1.source.tsd.TSDInvalidTargetMarketExceptionType;
@@ -31,6 +31,12 @@ import org.gs1.source.tsd.TSDUnsupportedVersionExceptionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+/**
+ * Process query containing AAQI
+ * @author Hyeeun
+ *
+ */
 public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 
 	private static final Logger logger = LoggerFactory.getLogger(QueryProcessor.class);
@@ -45,7 +51,7 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 	private CountryCodeType targetMarket;
 	private String clientGln;
 
-	public QueryProcessor(DAOFactory factory, String DBtype, TSDQueryByGTINRequestType request) {
+	public QueryProcessor(DAOFactory factory, String DBtype, TSDQueryByGTINRequestType request, String clientGln) {
 
 		this.factory = factory;
 		this.DBtype = DBtype;
@@ -53,47 +59,53 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		this.gtin = request.getGtin();
 		this.targetMarket = request.getTargetMarket();
 		this.aggregatorUrl = null;
+		this.clientGln = clientGln;
 	}
 
+	/**
+	 * query to cache and backend repository
+	 * call AIQI
+	 * process AAQI by call for queryByGtin method
+	 * @return
+	 * @throws Exception
+	 */
 	public String query() throws Exception {
 
 		TSDQueryByGTINResponseType rs = new TSDQueryByGTINResponseType();
-
+		
 		String targetMarketValue = request.getTargetMarket().getValue();
 
+		TSDExceptionGenerator exceptionGenerator = new TSDExceptionGenerator();
+		
+		//Check whether GTIN is valid
 		CheckBit checkBit = new CheckBit();
-
 		if(gtin.length() < 14 || checkBit.check(gtin) == false) {
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("Invalid GTIN");
-
-			TSDInvalidGTINExceptionType exception = new TSDInvalidGTINExceptionType();
-			exception.setExceptionReason(reason);
+			
+			TSDInvalidGTINExceptionType exception = (TSDInvalidGTINExceptionType) exceptionGenerator.generateInvalidGTINException();
 			rs.setInvalidGTINException(exception);
+			
 			logger.info("Invalid GTIN");
 
+		//Check whether Target Market is valid
 		} else if(targetMarketValue.length() != 3) {
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("Invalid TargetMarket");
-
-			TSDInvalidTargetMarketExceptionType exception = new TSDInvalidTargetMarketExceptionType();
-			exception.setExceptionReason(reason);
+			
+			TSDInvalidTargetMarketExceptionType exception = (TSDInvalidTargetMarketExceptionType) exceptionGenerator.generateInvalidTargetMarketException();
 			rs.setInvalidTargetMarketException(exception);
+			
 			logger.info("Invalid TargetMarket");
 
 		} else {
 
 			DataAccessObject dao = factory.getDAO(DBtype);
 
+			//query to cache
 			rs = dao.queryCache(gtin, targetMarketValue);
 
 			if(rs != null) {
 				logger.info("Get Data from Cache");
 			} else {
+				
+				//query to backend repository
 				rs = dao.queryDB(gtin, targetMarket);
 				if(rs != null) {
 					logger.info("Get Data from Mongo");
@@ -107,15 +119,10 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 					AIQIProcessor aiqiProcessor = new AIQIProcessor();
 					TSDQueryIndexByGTINResponseType aiqiResponse = aiqiProcessor.queryByGtin(aiqiRequest);
 					if(aiqiResponse == null) {
+						//This means No Data Aggregator that has desired product data.
 						logger.info("No Data in GS1 Source");
 
-						Description200Type reason = new Description200Type();
-						reason.setLanguageCode("en");
-						reason.setCodeListVersion("1.1");
-						reason.setValue("No Data in GS1 Source");
-
-						TSDNoDataExceptionType exception = new TSDNoDataExceptionType();
-						exception.setExceptionReason(reason);
+						TSDNoDataExceptionType exception = (TSDNoDataExceptionType) exceptionGenerator.generateNoDataException();
 
 						rs = new TSDQueryByGTINResponseType();
 						rs.setNoDataException(exception);
@@ -126,25 +133,22 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 						prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 						String thisUrl = prop.getProperty("aggregatorUrl");
 						if(aggregatorUrl.compareTo(thisUrl) == 0) {
+							//This means that the data of the GTIN exists, but not supports desired Target Market.
 							logger.info("This data is not supported with this target market.");
 
-							Description200Type reason = new Description200Type();
-							reason.setLanguageCode("en");
-							reason.setCodeListVersion("1.1");
-							reason.setValue("This data is not supported with this target market.");
-
-							TSDNoDataExceptionType exception = new TSDNoDataExceptionType();
-							exception.setExceptionReason(reason);
+							TSDNoDataExceptionType exception = (TSDNoDataExceptionType) exceptionGenerator.generateNoDataException();
 
 							rs = new TSDQueryByGTINResponseType();
 							rs.setNoDataException(exception);
 
 						} else {
+							//process AAQI
 							rs = queryByGtin(request);
 							if(rs.getProductData() != null) {
 								logger.info("Get Data from AAQI");
 								dao.insertCache(rs);
 							} else {
+								//There is exception, so query failed.
 								logger.info("Data Query Failed by Exception");
 							}
 						}
@@ -177,15 +181,14 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		String targetMarketValue = request.getTargetMarket().getValue();
 		String dataVersion = request.getDataVersion();
 
+		TSDExceptionGenerator exceptionGenerator = new TSDExceptionGenerator();
+		
+		//Check whether the request is valid
 		if(gtin == null || request.getTargetMarket() == null || dataVersion == null) {
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("Invalid Request (No GTIN, No TargetMarket or No DataVersion)");
-
-			TSDInvalidRequestExceptionType exception = new TSDInvalidRequestExceptionType();
-			exception.setExceptionReason(reason);
+			
+			TSDInvalidRequestExceptionType exception = (TSDInvalidRequestExceptionType) exceptionGenerator.generateInvalidRequestException();
 			rs.setInvalidRequestException(exception);
+			
 			return rs;
 		}
 
@@ -193,15 +196,12 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		prop.load(getClass().getClassLoader().getResourceAsStream(PROPERTY_PATH));
 		String currentDataVersion = prop.getProperty("dataVersion");
 
+		//Check whether requested version is supported
 		if(Float.parseFloat(dataVersion) > Float.parseFloat(currentDataVersion)) {
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("Unsupported Version");
 
-			TSDUnsupportedVersionExceptionType exception = new TSDUnsupportedVersionExceptionType();
-			exception.setExceptionReason(reason);
+			TSDUnsupportedVersionExceptionType exception = (TSDUnsupportedVersionExceptionType) exceptionGenerator.generateUnsupportedVersionException();
 			rs.setUnsupportedVersionException(exception);
+			
 			return rs;
 		}
 
@@ -223,6 +223,7 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 
 		String url = aggregatorUrl + mac_url + "&mac=" + mac;
 
+		//set Https Connection
 		HttpsURLConnection con = HttpsConnection.connect(url);
 
 		if(con.getResponseCode() != 200) {
@@ -255,20 +256,10 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 
 		//Response does not contain data
 		if(response.toString().contains("Exception")) {
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("Security (Not Authenticated)");
 
-			Description200Type contactDescription = new Description200Type();
-			contactDescription.setLanguageCode("en");
-			contactDescription.setCodeListVersion("1.1");
-			contactDescription.setValue("Check Client Key from peer Data Aggregator URL.");
-
-			TSDSecurityExceptionType exception = new TSDSecurityExceptionType();
-			exception.setExceptionReason(reason);
-			exception.setExceptionContactDescription(contactDescription);
+			TSDSecurityExceptionType exception = (TSDSecurityExceptionType) exceptionGenerator.generateSecurityException();
 			rs.setSecurityException(exception);
+			
 			return rs;
 		}
 
@@ -278,15 +269,10 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		//Check whether payload is reliable
 		if(response.length() == 0 || mac_payload.compareTo(con.getHeaderField("GS1-MAC")) != 0) {
 			System.out.println("Exception: payload is not identical.");
-
-			Description200Type reason = new Description200Type();
-			reason.setLanguageCode("en");
-			reason.setCodeListVersion("1.1");
-			reason.setValue("No Data (Invalid Data)");
-
-			TSDNoDataExceptionType exception = new TSDNoDataExceptionType();
-			exception.setExceptionReason(reason);
+			
+			TSDNoDataExceptionType exception = (TSDNoDataExceptionType) exceptionGenerator.generateNoDataException();
 			rs.setNoDataException(exception);
+			
 			return rs;
 		}
 
@@ -298,6 +284,10 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 
 	}
 
+	/**
+	 * Check the query from Data Aggregator through AAQI
+	 * @return
+	 */
 	public boolean isAAQI() {
 
 		if(clientGln.compareTo("0") != 0) {
@@ -305,11 +295,6 @@ public class QueryProcessor implements AggregatorAggregatorQueryInterface {
 		}
 
 		return false;
-	}
-
-	public void setClientGln(String value) {
-
-		this.clientGln = value;
 	}
 
 }
