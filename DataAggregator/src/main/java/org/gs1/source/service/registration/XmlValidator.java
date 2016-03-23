@@ -39,7 +39,9 @@ public class XmlValidator {
 					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "ProductInstructionsModule.xsd")),
 					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "ProductOriginInformationModule.xsd")),
 					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "ProductQuantityInformationModule.xsd")),
-					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "QueryByGtinResponse.xsd"))
+					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "QueryByGtinResponse.xsd")),
+					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "NonfoodIntegredientInformationModule.xsd")),
+					new StreamSource(Thread.currentThread().getContextClassLoader().getResourceAsStream(xsdFilePath + "ProductUsageAndSafetyModule.xsd"))
 			};
 
 			Schema schema = schemaFactory.newSchema(xsds);		
