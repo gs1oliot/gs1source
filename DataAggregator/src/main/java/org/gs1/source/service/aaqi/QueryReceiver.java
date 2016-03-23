@@ -33,7 +33,8 @@ public class QueryReceiver {
 		request.setDataVersion(dataVersion);
 		
 		DAOFactory factory = new DAOFactory();
-		QueryProcessor processor = new QueryProcessor(factory, "mongo", request, clientGln);
+		QueryProcessor processor = new QueryProcessor(factory, "mongo", request);
+		processor.setClientGln(clientGln);
 		
 		return processor;
 	}
