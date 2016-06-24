@@ -32,6 +32,10 @@ public class CheckBit {
 		
 		int check_sum = 10 - (sum % 10);
 		
+		if(check_sum == 10) {
+			check_sum = 0;
+		}
+		
 		if(check[12] == check_sum) {
 			return true;
 		} else {
