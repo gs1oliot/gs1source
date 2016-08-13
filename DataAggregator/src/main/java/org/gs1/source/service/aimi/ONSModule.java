@@ -18,9 +18,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.gs1.source.service.type.TSDIndexMaintenanceRequestSuccessType;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
 import org.gs1.source.service.type.TSDIndexMaintenanceResponseType;
 import org.gs1.source.service.util.DomainConvertor;
+import org.gs1.source.service.util.TSDExceptionGenerator;
+import org.gs1.source.tsd.Description200Type;
+import org.gs1.source.tsd.TSDImplementationExceptionType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,16 +56,49 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 	 */
 	public TSDIndexMaintenanceResponseType add(TSDIndexMaintenanceRequestType request) throws IOException {
 		
+		TSDIndexMaintenanceResponseType rs = new TSDIndexMaintenanceResponseType();
+		
 		String domain = (new DomainConvertor()).convert(request.getGtin());
 		
 		String token = onsLogin();
-
-		addDomain(domain, token);
-		addRecords(domain, token, request.getDataAggregatorService().getBaseUrl());
-
-		System.out.println("add is done");
 		
-		return null;
+		TSDExceptionGenerator exceptionGenerator = new TSDExceptionGenerator();
+
+		if(token == null) {
+			System.out.println("add is failed");
+			TSDImplementationExceptionType exception = (TSDImplementationExceptionType) exceptionGenerator.generateImplementationException();
+			rs.setImplementationException(exception);
+			
+			return rs;
+		}
+		
+		if(addDomain(domain, token)) {
+			if(addRecords(domain, token, request.getDataAggregatorService().getBaseUrl())) {
+				System.out.println("add is done");
+				TSDIndexMaintenanceRequestSuccessType indexMaintenanceRequestSuccess = new TSDIndexMaintenanceRequestSuccessType();
+				Description200Type description = new Description200Type();
+				description.setLanguageCode("en");
+				description.setCodeListVersion("1.1");
+				description.setValue("Success");
+				indexMaintenanceRequestSuccess.setSuccess(description);
+				rs.setIndexMaintenanceRequestSuccess(indexMaintenanceRequestSuccess);
+				
+				return rs;
+			} else {
+				System.out.println("add is failed");
+				TSDImplementationExceptionType exception = (TSDImplementationExceptionType) exceptionGenerator.generateImplementationException();
+				rs.setImplementationException(exception);
+				
+				return rs;
+			}
+		} else {
+			System.out.println("add is failed");
+			TSDImplementationExceptionType exception = (TSDImplementationExceptionType) exceptionGenerator.generateImplementationException();
+			rs.setImplementationException(exception);
+			
+			return rs;
+		}
+
 	}
 
 	public TSDIndexMaintenanceResponseType change(TSDIndexMaintenanceRequestType request){
@@ -80,16 +117,42 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 
 	//Delete domain in ONS
 	public TSDIndexMaintenanceResponseType delete(TSDIndexMaintenanceRequestType request) throws IOException{
+		
+		TSDIndexMaintenanceResponseType rs = new TSDIndexMaintenanceResponseType();
 
 		String domain = (new DomainConvertor()).convert(request.getGtin());
 		
 		String token = onsLogin();
 		
-		deleteDomain(domain, token);
-
-		System.out.println("delete is done");
+		TSDExceptionGenerator exceptionGenerator = new TSDExceptionGenerator();
 		
-		return null;
+		if(token == null) {
+			System.out.println("delete is failed");
+			TSDImplementationExceptionType exception = (TSDImplementationExceptionType) exceptionGenerator.generateImplementationException();
+			rs.setImplementationException(exception);
+			
+			return rs;
+		}
+		
+		if(deleteDomain(domain, token)) {
+			System.out.println("delete is done");
+			TSDIndexMaintenanceRequestSuccessType indexMaintenanceRequestSuccess = new TSDIndexMaintenanceRequestSuccessType();
+			Description200Type description = new Description200Type();
+			description.setLanguageCode("en");
+			description.setCodeListVersion("1.1");
+			description.setValue("Success");
+			indexMaintenanceRequestSuccess.setSuccess(description);
+			rs.setIndexMaintenanceRequestSuccess(indexMaintenanceRequestSuccess);
+			
+			return rs;
+		} else {
+			System.out.println("delete is failed");
+			TSDImplementationExceptionType exception = (TSDImplementationExceptionType) exceptionGenerator.generateImplementationException();
+			rs.setImplementationException(exception);
+			
+			return rs;
+		}
+
 	}
 
 	private String onsLogin() throws IOException {
@@ -135,7 +198,9 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 
 	}
 	
-	private void deleteDomain(String domain, String token) throws UnsupportedEncodingException {
+	private boolean deleteDomain(String domain, String token) throws UnsupportedEncodingException {
+		
+		boolean result = true;
 
 		String queryUrl = onsServiceUrl + "company/" + username + "/server/" + onsServerIP + "/unOwnerOf";
 
@@ -154,17 +219,20 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 		try {
 			client.execute(delRequest);
 		} catch (ClientProtocolException e) {
-			
+			result = false;
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+			result = false;
 			e.printStackTrace();
 		}
 
-		System.out.println("domain is deleted");
+		return result;
+		
 	}
 	
-	private void addDomain(String domain, String token) throws UnsupportedEncodingException {
+	private boolean addDomain(String domain, String token) throws UnsupportedEncodingException {
+		
+		boolean result = true;
 
 		String queryUrl = onsServiceUrl + "company/" + username + "/server/" + onsServerIP + "/map";
 
@@ -183,17 +251,20 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 		try {
 			client.execute(postRequest);
 		} catch (ClientProtocolException e) {
-			
+			result = false;
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+			result = false;
 			e.printStackTrace();
 		}
 
-		System.out.println("domain is added");
+		return result;
+		
 	}
 	
-	private void addRecords(String domain, String token, String url) throws UnsupportedEncodingException {
+	private boolean addRecords(String domain, String token, String url) throws UnsupportedEncodingException {
+		
+		boolean result = true;
 
 		String queryUrl = onsServiceUrl + "company/" + username + "/domain/" + domain + "/newRecords";
 
@@ -215,14 +286,14 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 		try {
 			client.execute(postRequest);
 		} catch (ClientProtocolException e) {
-			
+			result = false;
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+			result = false;
 			e.printStackTrace();
 		}
 
-		System.out.println("records are added");
+		return result;
 
 	}
 

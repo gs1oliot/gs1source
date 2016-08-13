@@ -7,9 +7,9 @@ import org.gs1.source.tsd.TSDSecurityExceptionType;
 public class TSDExceptionGenerator {
 
 	private TSDExceptionType exception;
-	
+
 	public TSDExceptionGenerator() {
-		
+
 		exception = new TSDExceptionType();
 	}
 
@@ -19,9 +19,9 @@ public class TSDExceptionGenerator {
 		reason.setLanguageCode("en");
 		reason.setCodeListVersion("1.1");
 		reason.setValue("Unsupported Version");
-		
+
 		exception.setExceptionReason(reason);
-		
+
 		return exception;
 	}
 
@@ -43,21 +43,21 @@ public class TSDExceptionGenerator {
 	}
 
 	public TSDExceptionType generateInvalidRequestException() {
-		
+
 		Description200Type reason = new Description200Type();
 		reason.setLanguageCode("en");
 		reason.setCodeListVersion("1.1");
 		reason.setValue("Invalid Request (No GTIN, No TargetMarket or No DataVersion)");
-		
+
 		exception.setExceptionReason(reason);
 
 		return exception;
 	}
 
 	public TSDExceptionType generateSecurityException() {
-		
+
 		TSDSecurityExceptionType securityException = new TSDSecurityExceptionType();
-		
+
 		Description200Type reason = new Description200Type();
 		reason.setLanguageCode("en");
 		reason.setCodeListVersion("1.1");
@@ -67,7 +67,7 @@ public class TSDExceptionGenerator {
 		contactDescription.setLanguageCode("en");
 		contactDescription.setCodeListVersion("1.1");
 		contactDescription.setValue("Check Client Key from peer Data Aggregator URL.");
-		
+
 		securityException.setExceptionReason(reason);
 		securityException.setExceptionContactDescription(contactDescription);
 
@@ -75,26 +75,62 @@ public class TSDExceptionGenerator {
 	}
 
 	public TSDExceptionType generateInvalidTargetMarketException() {
-		
+
 		Description200Type reason = new Description200Type();
 		reason.setLanguageCode("en");
 		reason.setCodeListVersion("1.1");
 		reason.setValue("Invalid TargetMarket");
-		
+
 		exception.setExceptionReason(reason);
 
 		return exception;
 	}
 
 	public TSDExceptionType generateNoDataException() {
-		
+
 		Description200Type reason = new Description200Type();
 		reason.setLanguageCode("en");
 		reason.setCodeListVersion("1.1");
 		reason.setValue("No Data in GS1 Source");
 
 		exception.setExceptionReason(reason);
-		
+
+		return exception;
+	}
+
+	public TSDExceptionType generateDuplicateEntryException() {
+
+		Description200Type reason = new Description200Type();
+		reason.setLanguageCode("en");
+		reason.setCodeListVersion("1.1");
+		reason.setValue("Duplicate Entry in ONS server");
+
+		exception.setExceptionReason(reason);
+
+		return exception;
+	}
+
+	public TSDExceptionType generateNoSuchEntryException() {
+
+		Description200Type reason = new Description200Type();
+		reason.setLanguageCode("en");
+		reason.setCodeListVersion("1.1");
+		reason.setValue("No Such Entry in ONS server");
+
+		exception.setExceptionReason(reason);
+
+		return exception;
+	}
+
+	public TSDExceptionType generateInvalidServiceURLException() {
+
+		Description200Type reason = new Description200Type();
+		reason.setLanguageCode("en");
+		reason.setCodeListVersion("1.1");
+		reason.setValue("Invalid Service URL");
+
+		exception.setExceptionReason(reason);
+
 		return exception;
 	}
 
