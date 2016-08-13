@@ -6,7 +6,7 @@ public class TSDIndexMaintenanceRequestType {
 
 	protected String gtin;
 	protected CountryCodeType targetMarket;
-	protected String aggregatorUrl;
+	protected TSDServiceReferenceType dataAggregatorService;
 	
 	public String getGtin(){
 		return gtin;
@@ -24,12 +24,12 @@ public class TSDIndexMaintenanceRequestType {
 		this.targetMarket = value;
 	}
 	
-	public String getAggregatorUrl(){
-		return aggregatorUrl;
+	public TSDServiceReferenceType getDataAggregatorService() {
+		return dataAggregatorService;
 	}
 	
-	public void setAggregatorUrl(String value){
-		this.aggregatorUrl = value;
+	public void setDataAggregatorService(TSDServiceReferenceType value) {
+		this.dataAggregatorService = value;
 	}
 	
 }

@@ -7,8 +7,9 @@ import javax.xml.bind.JAXBException;
 
 import org.gs1.source.service.DAOFactory;
 import org.gs1.source.service.DataAccessObject;
-import org.gs1.source.service.aimi.ZONEUpdator;
+import org.gs1.source.service.aimi.ONSModule;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
+import org.gs1.source.service.type.TSDServiceReferenceType;
 import org.gs1.source.service.util.CheckBit;
 import org.gs1.source.service.util.POJOConvertor;
 import org.gs1.source.tsd.CountryCodeType;
@@ -75,7 +76,7 @@ public class Registerar {
 			return EXISTED;
 		}
 
-		//ZONE Update
+		//ONS ZONE Update
 		rs_check = dao.queryDB(gtin);
 		if(rs_check == null) {
 
@@ -85,10 +86,10 @@ public class Registerar {
 
 			TSDIndexMaintenanceRequestType request = new TSDIndexMaintenanceRequestType();
 			request.setGtin(gtin);
-			request.setAggregatorUrl(aggregatorUrl);
+			request.setDataAggregatorService(new TSDServiceReferenceType(aggregatorUrl));
 
-			ZONEUpdator zoneUpdator = new ZONEUpdator();
-			zoneUpdator.add(request);
+			ONSModule onsModule = new ONSModule();
+			onsModule.add(request);
 		}
 		
 		dao.insertDB(rs);

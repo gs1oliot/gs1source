@@ -8,7 +8,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 
 public class HttpsConnection {
-
+	
 	public static HttpsURLConnection connect(String url) throws Exception {
 
 		URL obj = new URL(url);
