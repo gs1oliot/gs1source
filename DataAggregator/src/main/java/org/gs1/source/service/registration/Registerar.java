@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import org.gs1.source.service.DAOFactory;
 import org.gs1.source.service.DataAccessObject;
 import org.gs1.source.service.aimi.ONSModule;
+import org.gs1.source.service.mongo.ServiceKey;
 import org.gs1.source.service.type.TSDIndexMaintenanceRequestType;
 import org.gs1.source.service.type.TSDServiceReferenceType;
 import org.gs1.source.service.util.CheckBit;
@@ -23,10 +24,11 @@ public class Registerar {
 	
 	private static final String PROPERTY_PATH = "aggregator.properties";
 
-	public static final int NODATA = 0;
-	public static final int NOT_VALID = 1;
-	public static final int EXISTED = 2;
-	public static final int INSERTED = 3;
+	public static final int NOT_AUTHENTICATED = 0;
+	public static final int NODATA = 1;
+	public static final int NOT_VALID = 2;
+	public static final int EXISTED = 3;
+	public static final int INSERTED = 4;
 
 	private DAOFactory factory;
 	private String DBtype;
@@ -36,8 +38,15 @@ public class Registerar {
 		this.DBtype = DBtype;
 	}
 
-	public int register(String xmldata) throws JAXBException, IOException {
+	public int register(String key, String xmldata) throws JAXBException, IOException {
 
+		ServiceKey serviceKey = new ServiceKey();
+		
+		if(!serviceKey.queryKey(key)) {
+			logger.info("Service Key is not authenticated");
+			return NOT_AUTHENTICATED;
+		}
+		
 		//Check whether the data is empty
 		if (xmldata == "") {
 			logger.info("Data is empty");

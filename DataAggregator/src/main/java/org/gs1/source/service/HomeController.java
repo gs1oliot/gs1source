@@ -158,17 +158,14 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/postdata", method = RequestMethod.POST, consumes = "application/xml")
-	public ResponseEntity<String> postData(@RequestBody String xmldata) throws Exception {
-
-		//		if (userID.compareTo("kaist") != 0 || password.compareTo("reslresl") != 0) {
-		//			System.out.println("Not Authenticated");
-		//			return new ResponseEntity<String>(new String("Not Authenticated"), HttpStatus.BAD_REQUEST);
-		//		}
-
+	public ResponseEntity<String> postData(@RequestParam String key, @RequestBody String xmldata) throws Exception {
+		
 		Registerar registerar = new Registerar(new DAOFactory(), "mongo");
-		int result = registerar.register(xmldata);
+		int result = registerar.register(key, xmldata);
 
-		if (result == Registerar.NODATA) {
+		if (result == Registerar.NOT_AUTHENTICATED) {
+			return new ResponseEntity<String>(new String("The service key is not authenticated"), HttpStatus.BAD_REQUEST);
+		} else if (result == Registerar.NODATA) {
 			System.out.println("The xmldata is empty.");
 			return new ResponseEntity<String>(new String("The xmldata is empty."), HttpStatus.OK);
 		} else if (result == Registerar.NOT_VALID) {
