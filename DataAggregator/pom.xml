@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gs1</groupId>
 	<artifactId>source</artifactId>
-	<name>DataAggregator_2</name>
+	<name>DataAggregator</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
