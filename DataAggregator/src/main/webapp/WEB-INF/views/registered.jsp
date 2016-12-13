@@ -24,9 +24,9 @@
 	else if (result == Registerar.EXISTED)
 		out.println("<h1>The product is already exists.<h1>");
 	else if (result == Registerar.NOT_AUTHENTICATED)
-		out.println("<h1>The product is registered at Aggregator.<h1>");
-	else
 		out.println("<h1>The service key is not registered.<h1>");
+	else
+		out.println("<h1>The product is registered at Aggregator.<h1>");
 %>
 </body>
 </html>
