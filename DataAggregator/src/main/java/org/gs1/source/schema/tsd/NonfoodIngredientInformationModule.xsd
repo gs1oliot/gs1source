@@ -27,20 +27,28 @@ The schema and subsequent updates will be provided on the GS1 websites.
 ---------------------------
 ]]></xsd:documentation>
 	</xsd:annotation>
-	<xsd:import namespace="
-	urn:gs1:shared:shared_common:xsd:3 "
+	<xsd:import namespace="urn:gs1:shared:shared_common:xsd:3"
 		schemaLocation="../shared/SharedCommon.xsd" />
 	<xsd:import namespace="urn:gs1:tsd:tsd_common:xsd:1"
 		schemaLocation="TSDCommon.xsd" />
 	<xsd:element name="nonfoodIngredientInformationModule"
 		type="nonfood_ingredient_information_module:TSD_NonfoodIngredientInformationModuleType" />
 	<xsd:complexType name="TSD_NonfoodIngredientInformationModuleType">
-		<xsd:sequence>
-			<xsd:element name="nonfoodIngredientStatement"
-				type="tsd_common:TSD_FormattedDescription5000Type" minOccurs="0" />
-			<xsd:element name="avpList"
-				type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0" />
-		</xsd:sequence>
+
+		<xsd:complexContent>
+			<xsd:extension base="tsd_common:TSD_ModuleType">
+				<xsd:sequence>
+					<xsd:element name="nonfoodIngredientStatement"
+						type="tsd_common:TSD_FormattedDescription5000Type" minOccurs="0" />
+					<xsd:element name="avpList"
+						type="tsd_common:TSD_AttributeValuePairListType" minOccurs="0" />
+					<xsd:element name="nonfoodIngredient"
+						type="nonfood_ingredient_information_module:TSD_NonfoodIngredientType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+		
 	</xsd:complexType>
 	<xsd:complexType name="TSD_NonfoodIngredientType">
 		<xsd:sequence>

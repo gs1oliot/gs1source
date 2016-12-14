@@ -31,6 +31,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+	private final static QName _ProductData_QNAME = new QName("urn:gs1:tsd:product_data:xsd:1", "productData");
     private final static QName _ProductClaimsAndEndorsementsModule_QNAME = new QName("urn:gs1:tsd:product_claims_and_endorsements_module:xsd:1", "productClaimsAndEndorsementsModule");
     private final static QName _FoodAndBeverageIngredientInformationModule_QNAME = new QName("urn:gs1:tsd:food_and_beverage_information_module:xsd:1", "foodAndBeverageIngredientInformationModule");
     private final static QName _ProductQuantityInformationModule_QNAME = new QName("urn:gs1:tsd:product_quantity_information_module:xsd:1", "productQuantityInformationModule");
@@ -41,6 +42,7 @@ public class ObjectFactory {
     private final static QName _ProductInstructionsModule_QNAME = new QName("urn:gs1:tsd:product_instructions_module:xsd:1", "productInstructionsModule");
     private final static QName _ProductOriginInformationModule_QNAME = new QName("urn:gs1:tsd:product_origin_information_module:xsd:1", "productOriginInformationModule");
     private final static QName _FoodAndBeveragePreparationInformationModule_QNAME = new QName("urn:gs1:tsd:food_and_beverage_preparation_information_module:xsd:1", "foodAndBeveragePreparationInformationModule");
+    private final static QName _NonfoodIngredientInformationModule_QNAME = new QName("urn:gs1:tsd:nonfood_ingredient_information_module:xsd:1", "nonfoodIngredientInformationModule");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.gs1.source.tsd
@@ -1268,6 +1270,15 @@ public class ObjectFactory {
     public JAXBElement<TSDQueryByGTINResponseType> createQueryByGtinResponse(TSDQueryByGTINResponseType value) {
         return new JAXBElement<TSDQueryByGTINResponseType>(_QueryByGtinResponse_QNAME, TSDQueryByGTINResponseType.class, null, value);
     }
+    
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TSDProductDataType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:gs1:tsd:product_data:xsd:1", name = "productData")
+	public JAXBElement<TSDProductDataType> createProductData(TSDProductDataType value) {
+		return new JAXBElement<TSDProductDataType>(_ProductData_QNAME, TSDProductDataType.class, null, value);
+	}
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TSDNutritionalProductInformationModuleType }{@code >}}
@@ -1321,6 +1332,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "urn:gs1:tsd:food_and_beverage_preparation_information_module:xsd:1", name = "foodAndBeveragePreparationInformationModule")
     public JAXBElement<TSDFoodAndBeveragePreparationInformationModuleType> createFoodAndBeveragePreparationInformationModule(TSDFoodAndBeveragePreparationInformationModuleType value) {
         return new JAXBElement<TSDFoodAndBeveragePreparationInformationModuleType>(_FoodAndBeveragePreparationInformationModule_QNAME, TSDFoodAndBeveragePreparationInformationModuleType.class, null, value);
+    }
+    
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TSDNonfoodIngredientInformationModuleType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:gs1:tsd:nonfood_ingredient_information_module:xsd:1", name = "nonfoodIngredientInformationModule")
+    public JAXBElement<TSDNonfoodIngredientInformationModuleType> createNonfoodIngredientInformationModule(TSDNonfoodIngredientInformationModuleType value) {
+        return new JAXBElement<TSDNonfoodIngredientInformationModuleType>(_NonfoodIngredientInformationModule_QNAME, TSDNonfoodIngredientInformationModuleType.class, null, value);
     }
 
 }
