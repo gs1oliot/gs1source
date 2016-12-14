@@ -84,8 +84,10 @@ public class Registerar {
 			logger.info("Existing Data");
 			return EXISTED;
 		}
+		
+		dao.insertDB(rs);
 
-		//ONS ZONE Update
+		//ONS Domain Update
 		rs_check = dao.queryDB(gtin);
 		if(rs_check == null) {
 
@@ -101,8 +103,6 @@ public class Registerar {
 			onsModule.add(request);
 		}
 		
-		dao.insertDB(rs);
-
 		return INSERTED;
 	}
 

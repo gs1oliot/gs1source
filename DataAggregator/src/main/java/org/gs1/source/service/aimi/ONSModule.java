@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -44,7 +45,7 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 		onsServiceUrl = prop.getProperty("ons_service_url");
 		onsServerIP = prop.getProperty("ons_server_ip");
 		username = prop.getProperty("admin_username");
-		password = prop.getProperty("password");
+		password = prop.getProperty("admin_password");
 	}
 
 	/**
@@ -155,7 +156,7 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 
 	}
 
-	private String onsLogin() throws IOException {
+	public String onsLogin() throws IOException {
 
 		String url = onsServiceUrl + "oauth/token";
 
@@ -179,6 +180,14 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 		postRequest.setEntity(new UrlEncodedFormEntity(params));
 
 		HttpResponse response = client.execute(postRequest);
+		
+		Header[] headers = response.getAllHeaders();
+		
+		for(Header h : headers) {
+			System.out.println(h);
+		}
+		
+		System.out.println(response.getStatusLine());
 
 		String entity = EntityUtils.toString(response.getEntity());
 
@@ -189,10 +198,9 @@ public class ONSModule implements AggregatorIndexMaintenanceInterface {
 			System.out.println("login is done");
 			return token;
 		} catch (JSONException e) {
+			System.out.println("login is failed");
 			e.printStackTrace();
 		}
-
-		System.out.println("login is failed");
 
 		return null;
 

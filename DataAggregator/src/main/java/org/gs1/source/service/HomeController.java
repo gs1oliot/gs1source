@@ -128,6 +128,13 @@ public class HomeController {
 		};
 
 	}
+	
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
+	public String query(Locale locale, Model model) {
+
+		return "query";
+
+	}
 
 	/**
 	 * Product data register page
